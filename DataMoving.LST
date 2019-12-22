@@ -1,0 +1,281 @@
+A51 MACRO ASSEMBLER  DATAMOVING                                                           12/08/2019 12:36:59 PAGE     1
+
+
+MACRO ASSEMBLER A51 V8.02
+OBJECT MODULE PLACED IN DataMoving.OBJ
+ASSEMBLER INVOKED BY: E:\51\C51\BIN\A51.EXE DataMoving.asm SET(SMALL) DEBUG EP
+
+LOC  OBJ            LINE     SOURCE
+
+0000                   1             ORG     0000H       ;³ÌÐò´Ó´ËµØÖ·¿ªÊ¼ÔËÐÐ
+0000 020030            2             LJMP    MAIN
+                       3             
+                       4     
+0003                   5             ORG     0003H
+0003                   6     LOOP:
+0003 310E              7             ACALL DISPLAY 
+0005 30B702            8             JNB P3.7 ,RE0   
+0008 0103              9             AJMP LOOP
+000A                  10     RE0:
+000A 32               11             RETI
+                      12             
+                      13             
+0013                  14             ORG 0013H                                
+0013 758805           15             MOV     TCON,#05H
+0016 75A885           16             MOV     IE,#85H                 
+0019                  17     LOOP1:
+                      18             
+0019 113C             19         ACALL YEAR
+001B 30B602           20             JNB P3.6,RE1    
+001E 0119             21             AJMP LOOP1
+0020                  22             RE1:
+0020 1581             23             DEC SP
+0022 1581             24             DEC SP
+0024 C082             25             PUSH DPL
+0026 C082             26             PUSH DPL
+0028 C083             27             PUSH DPH
+002A 32               28             RETI                
+0030                  29         ORG         0030H           
+0030                  30     MAIN:
+0030 758805           31         MOV         TCON,#05H
+0033 75A885           32             MOV     IE,#85H
+  0010                33             MS1             EQU   10H
+  0011                34             MS2     EQU   11H
+  0012                35             S1      EQU   12H
+  0013                36             S2      EQU   13H
+  0014                37             M1              EQU       14H
+  0015                38             M2              EQU   15H
+  0016                39             H1              EQU   16H
+  0017                40             H2              EQU   17H      
+0036 900400           41         MOV DPTR,#TAB
+0039 02009D           42         LJMP    NEWDAY  
+003C                  43     YEAR:
+003C C2A2             44             CLR P2.2
+003E C2A3             45             CLR  P2.3
+0040 C2A4             46             CLR  P2.4   
+0042 75805B           47             MOV  P0,#5BH   
+0045 758000           48             MOV  P0,#00H  
+0048 D2A2             49             SETB P2.2
+004A C2A3             50             CLR  P2.3
+004C C2A4             51             CLR  P2.4
+004E 75803F           52             MOV  P0,#3FH   
+0051 758000           53             MOV  P0,#00H
+0054 C2A2             54             CLR P2.2
+0056 D2A3             55             SETB  P2.3
+0058 C2A4             56             CLR  P2.4
+005A 758006           57             MOV  P0,#06H  
+005D 758000           58             MOV  P0,#00H
+A51 MACRO ASSEMBLER  DATAMOVING                                                           12/08/2019 12:36:59 PAGE     2
+
+0060 D2A2             59             SETB P2.2
+0062 D2A3             60             SETB  P2.3
+0064 C2A4             61             CLR  P2.4
+0066 75806F           62             MOV  P0,#6FH  
+0069 758000           63             MOV  P0,#00H
+006C                  64     MONTH:  
+006C C2A2             65             CLR P2.2
+006E C2A3             66             CLR  P2.3
+0070 D2A4             67             SETB  P2.4
+0072 758006           68             MOV  P0,#06H  
+0075 758000           69             MOV  P0,#00H
+0078 D2A2             70             SETB P2.2
+007A C2A3             71             CLR  P2.3
+007C D2A4             72             SETB  P2.4
+007E 75805B           73             MOV  P0,#5BH  
+0081 758000           74             MOV  P0,#00H
+0084                  75     DAY:
+0084 C2A2             76             CLR   P2.2
+0086 D2A3             77             SETB  P2.3
+0088 D2A4             78             SETB  P2.4
+008A 75803F           79             MOV  P0,#3FH  
+008D 758000           80             MOV  P0,#00H
+0090 D2A2             81             SETB P2.2
+0092 D2A3             82             SETB  P2.3
+0094 D2A4             83             SETB  P2.4
+0096 75804F           84             MOV  P0,#4FH  
+0099 758000           85             MOV  P0,#00H
+009C 22               86         RET 
+                      87     
+009D                  88     NEWDAY:
+009D 7510FF           89             MOV MS1,#0FFH
+00A0 7511FF           90             MOV MS2,#0FFH
+00A3 7512FF           91             MOV S1,#0FFH
+00A6 7513FF           92             MOV S2,#0FFH
+00A9 7514FF           93             MOV M1,#0FFH
+00AC 7515FF           94             MOV M2,#0FFH
+00AF 7516FF           95             MOV H1,#0FFH
+00B2 7517FF           96             MOV H2,#0FFH
+00B5                  97     TIME:
+00B5 7F02             98             MOV R7,#02H              
+00B7 7516FF           99             MOV H1,#0FFH
+00BA 0517            100             INC H2             
+00BC                 101     OVH1:
+00BC 7E02            102             MOV R6,#02H  
+00BE 7515FF          103             MOV M2,#0FFH
+00C1 0516            104             INC H1
+00C3                 105     OVM2:
+00C3 7D0A            106             MOV R5,#0AH
+00C5 7514FF          107             MOV M1,#0FFH
+00C8 0515            108             INC M2
+00CA                 109     OVM1:
+00CA 7C06            110             MOV R4,#06H
+00CC 7513FF          111             MOV S2,#0FFH
+00CF 0514            112             INC M1  
+00D1                 113     OVS2:
+00D1 7B0A            114             MOV R3,#0AH
+00D3 7512FF          115             MOV S1,#0FFH
+00D6 0513            116             INC S2
+                     117               
+00D8                 118     OVS1:
+00D8 7A0A            119             MOV     R2,#0AH
+00DA 7511FF          120             MOV MS2,#0FFH
+00DD 0512            121             INC S1
+00DF                 122     OVMS2:
+00DF 790A            123             MOV R1,#0AH
+00E1 7510FF          124             MOV MS1,#0FFH
+A51 MACRO ASSEMBLER  DATAMOVING                                                           12/08/2019 12:36:59 PAGE     3
+
+00E4 0511            125             INC MS2
+00E6                 126     OVMS1:
+00E6 780A            127             MOV R0,#0AH
+                     128             
+00E8                 129     START:
+00E8 758901          130         MOV TMOD,#01H
+00EB 758CFC          131             MOV TH0,#0FCH
+00EE 758AB4          132             MOV TL0,#0B4H 
+00F1 D28C            133             SETB TR0
+00F3 308DFD          134             JNB TF0,$                
+00F6 C28D            135             CLR TF0
+00F8 0510            136             INC MS1
+00FA 310E            137             ACALL DISPLAY
+00FC D8EA            138             DJNZ R0,START
+00FE D9E6            139             DJNZ R1,OVMS1
+0100 DADD            140             DJNZ R2,OVMS2
+0102 DBD4            141             DJNZ R3,OVS1
+0104 DCCB            142             DJNZ R4,OVS2
+0106 DDC2            143             DJNZ R5,OVM1
+0108 DEB9            144             DJNZ R6,OVM2
+010A DFB0            145             DJNZ R7,OVH1
+010C 019D            146             AJMP NEWDAY
+010E                 147     DISPLAY:
+010E D2A2            148             SETB  P2.2
+0110 D2A3            149             SETB  P2.3
+0112 D2A4            150             SETB  P2.4
+0114 E510            151             MOV A,MS1
+0116 93              152             MOVC A,@A+DPTR
+0117 F580            153             MOV P0,A  
+0119 758000          154             MOV P0,#00H 
+011C C2A2            155             CLR  P2.2
+011E D2A3            156             SETB  P2.3
+0120 D2A4            157             SETB  P2.4
+0122 E511            158             MOV A,MS2
+0124 93              159             MOVC A,@A+DPTR
+0125 F580            160             MOV P0,A  
+0127 758000          161             MOV P0,#00H 
+012A D2A2            162             SETB  P2.2
+012C C2A3            163             CLR  P2.3
+012E D2A4            164             SETB  P2.4
+0130 E512            165             MOV A,S1
+0132 93              166             MOVC A,@A+DPTR
+0133 F580            167             MOV P0,A  
+0135 758000          168             MOV P0,#00H 
+0138 C2A2            169             CLR  P2.2
+013A C2A3            170             CLR  P2.3
+013C D2A4            171             SETB  P2.4
+013E E513            172             MOV A,S2
+0140 93              173             MOVC A,@A+DPTR
+0141 F580            174             MOV P0,A  
+0143 758000          175             MOV P0,#00H 
+0146 D2A2            176             SETB  P2.2
+0148 D2A3            177             SETB  P2.3
+014A C2A4            178             CLR  P2.4
+014C E514            179             MOV A,M1
+014E 93              180             MOVC A,@A+DPTR
+014F F580            181             MOV P0,A  
+0151 758000          182             MOV P0,#00H 
+0154 C2A2            183             CLR  P2.2
+0156 D2A3            184             SETB  P2.3
+0158 C2A4            185             CLR  P2.4
+015A E515            186             MOV A,M2
+015C 93              187             MOVC A,@A+DPTR
+015D F580            188             MOV P0,A  
+015F 758000          189             MOV P0,#00H 
+0162 D2A2            190             SETB  P2.2
+A51 MACRO ASSEMBLER  DATAMOVING                                                           12/08/2019 12:36:59 PAGE     4
+
+0164 C2A3            191             CLR  P2.3
+0166 C2A4            192             CLR  P2.4
+0168 E516            193             MOV A,H1
+016A 93              194             MOVC A,@A+DPTR
+016B F580            195             MOV P0,A  
+016D 758000          196             MOV P0,#00H 
+0170 C2A2            197             CLR  P2.2
+0172 C2A3            198             CLR  P2.3
+0174 C2A4            199             CLR  P2.4
+0176 E517            200             MOV A,H2
+0178 93              201             MOVC A,@A+DPTR
+0179 F580            202             MOV P0,A  
+017B 758000          203             MOV P0,#00H 
+017E 22              204             RET
+                     205     ;*********************************************************************
+017F 0130            206             AJMP    MAIN        ;Ìø×ªµ½Ö÷³ÌÐò´¦
+0400                 207     ORG 400H
+0400 3F065B4F        208     TAB: DB 3Fh,06h,5Bh,4Fh,66h,6Dh,7Dh,07h,7Fh,6Fh                 ;¹²Òõ¼«Æß¶ÎÊÂëÏÔ¹Ü
+0404 666D7D07                
+0408 7F6F                    
+                     209     END
+A51 MACRO ASSEMBLER  DATAMOVING                                                           12/08/2019 12:36:59 PAGE     5
+
+SYMBOL TABLE LISTING
+------ ----- -------
+
+
+N A M E             T Y P E  V A L U E   ATTRIBUTES
+
+DAY. . . . . . . .  C ADDR   0084H   A   
+DISPLAY. . . . . .  C ADDR   010EH   A   
+DPH. . . . . . . .  D ADDR   0083H   A   
+DPL. . . . . . . .  D ADDR   0082H   A   
+H1 . . . . . . . .  N NUMB   0016H   A   
+H2 . . . . . . . .  N NUMB   0017H   A   
+IE . . . . . . . .  D ADDR   00A8H   A   
+LOOP . . . . . . .  C ADDR   0003H   A   
+LOOP1. . . . . . .  C ADDR   0019H   A   
+M1 . . . . . . . .  N NUMB   0014H   A   
+M2 . . . . . . . .  N NUMB   0015H   A   
+MAIN . . . . . . .  C ADDR   0030H   A   
+MONTH. . . . . . .  C ADDR   006CH   A   
+MS1. . . . . . . .  N NUMB   0010H   A   
+MS2. . . . . . . .  N NUMB   0011H   A   
+NEWDAY . . . . . .  C ADDR   009DH   A   
+OVH1 . . . . . . .  C ADDR   00BCH   A   
+OVM1 . . . . . . .  C ADDR   00CAH   A   
+OVM2 . . . . . . .  C ADDR   00C3H   A   
+OVMS1. . . . . . .  C ADDR   00E6H   A   
+OVMS2. . . . . . .  C ADDR   00DFH   A   
+OVS1 . . . . . . .  C ADDR   00D8H   A   
+OVS2 . . . . . . .  C ADDR   00D1H   A   
+P0 . . . . . . . .  D ADDR   0080H   A   
+P2 . . . . . . . .  D ADDR   00A0H   A   
+P3 . . . . . . . .  D ADDR   00B0H   A   
+RE0. . . . . . . .  C ADDR   000AH   A   
+RE1. . . . . . . .  C ADDR   0020H   A   
+S1 . . . . . . . .  N NUMB   0012H   A   
+S2 . . . . . . . .  N NUMB   0013H   A   
+SP . . . . . . . .  D ADDR   0081H   A   
+START. . . . . . .  C ADDR   00E8H   A   
+TAB. . . . . . . .  C ADDR   0400H   A   
+TCON . . . . . . .  D ADDR   0088H   A   
+TF0. . . . . . . .  B ADDR   0088H.5 A   
+TH0. . . . . . . .  D ADDR   008CH   A   
+TIME . . . . . . .  C ADDR   00B5H   A   
+TL0. . . . . . . .  D ADDR   008AH   A   
+TMOD . . . . . . .  D ADDR   0089H   A   
+TR0. . . . . . . .  B ADDR   0088H.4 A   
+YEAR . . . . . . .  C ADDR   003CH   A   
+
+
+REGISTER BANK(S) USED: 0 
+
+
+ASSEMBLY COMPLETE.  0 WARNING(S), 0 ERROR(S)
